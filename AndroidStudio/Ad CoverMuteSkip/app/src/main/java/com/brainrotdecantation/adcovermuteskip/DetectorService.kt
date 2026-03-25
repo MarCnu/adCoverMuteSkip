@@ -42,6 +42,7 @@ import android.view.WindowMetrics
 
 class DetectorService : AccessibilityService(), SharedPreferences.OnSharedPreferenceChangeListener {
     // Data from the DataStorage SharedPreferences
+    private var disableAutoClick = false
     private var dataMonitorVolumeClick = false
 
     enum class SurfaceContentType {
@@ -145,6 +146,12 @@ class DetectorService : AccessibilityService(), SharedPreferences.OnSharedPrefer
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+        if (key == DataStorage.KEY_DISABLE_AUTO_CLICK) {
+            val newDisableAutoClick = DataStorage.loadDisableAutoClick(this)
+            if (newDisableAutoClick != disableAutoClick) { // Only update if it's actually different
+                disableAutoClick = newDisableAutoClick
+            }
+        }
         if (key == DataStorage.KEY_MONITOR_VOLUME_CLICK) {
             val newMonitorVolumeClick = DataStorage.loadMonitorVolumeClick(this)
             if (newMonitorVolumeClick != dataMonitorVolumeClick) { // Only update if it's actually different
@@ -170,6 +177,7 @@ class DetectorService : AccessibilityService(), SharedPreferences.OnSharedPrefer
         serviceInfo = info
 
         DataStorage.getSharedPreferences(this).registerOnSharedPreferenceChangeListener(this)
+        disableAutoClick = DataStorage.loadDisableAutoClick(this)
         dataMonitorVolumeClick = DataStorage.loadMonitorVolumeClick(this)
 
         overlaySurfaceViewManager = OverlaySurfaceViewManager(this)
@@ -304,24 +312,26 @@ class DetectorService : AccessibilityService(), SharedPreferences.OnSharedPrefer
         /*
          * Clicks
          */
-        RulePathNodeTools.getNode(defaultRoot, RulePaths.YoutubePaths.EXPANDED_AD_PORTRAIT_BUTTON)?.let {
-            clickOnNode(it, "removeExpandedAd")
-        } ?: run {
-            RulePathNodeTools.getNode(defaultRoot, RulePaths.YoutubePaths.EXPANDED_AD_PORTRAIT_BUTTON_PAUSE)?.let {
+        if(!disableAutoClick) {
+            RulePathNodeTools.getNode(defaultRoot, RulePaths.YoutubePaths.EXPANDED_AD_PORTRAIT_BUTTON)?.let {
                 clickOnNode(it, "removeExpandedAd")
             } ?: run {
-                RulePathNodeTools.getNode(defaultRoot, RulePaths.YoutubePaths.EXPANDED_AD_LANDSCAPE_BUTTON_PAUSE)?.let {
+                RulePathNodeTools.getNode(defaultRoot, RulePaths.YoutubePaths.EXPANDED_AD_PORTRAIT_BUTTON_PAUSE)?.let {
                     clickOnNode(it, "removeExpandedAd")
+                } ?: run {
+                    RulePathNodeTools.getNode(defaultRoot, RulePaths.YoutubePaths.EXPANDED_AD_LANDSCAPE_BUTTON_PAUSE)?.let {
+                        clickOnNode(it, "removeExpandedAd")
+                    }
                 }
             }
-        }
-        RulePathNodeTools.getNode(defaultRoot, RulePaths.YoutubePaths.SKIP_BUTTON_FLOATING)?.let {
-            clickOnNode(it, "skip")
-            Log.i("DetectorService_IdentifyNodes", "Found SKIP_BUTTON_FLOATING")
-        } ?: run {
-            RulePathNodeTools.getNode(defaultRoot, RulePaths.YoutubePaths.SKIP_BUTTON)?.let {
+            RulePathNodeTools.getNode(defaultRoot, RulePaths.YoutubePaths.SKIP_BUTTON_FLOATING)?.let {
                 clickOnNode(it, "skip")
-                Log.i("DetectorService_IdentifyNodes", "Found SKIP_BUTTON")
+                Log.i("DetectorService_IdentifyNodes", "Found SKIP_BUTTON_FLOATING")
+            } ?: run {
+                RulePathNodeTools.getNode(defaultRoot, RulePaths.YoutubePaths.SKIP_BUTTON)?.let {
+                    clickOnNode(it, "skip")
+                    Log.i("DetectorService_IdentifyNodes", "Found SKIP_BUTTON")
+                }
             }
         }
 

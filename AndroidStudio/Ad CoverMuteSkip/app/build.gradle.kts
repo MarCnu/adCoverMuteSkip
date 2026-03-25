@@ -12,8 +12,8 @@ android {
         applicationId = "com.brainrotdecantation.adcovermuteskip"
         minSdk = 24
         targetSdk = 34
-        versionCode = 11202 // xyzff
-        versionName = "1.1.2.2" // main.feature.bug.buildtofixbug
+        versionCode = 11300 // xyzff
+        versionName = "1.1.3.0" // main.feature.bug.buildtofixbug
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

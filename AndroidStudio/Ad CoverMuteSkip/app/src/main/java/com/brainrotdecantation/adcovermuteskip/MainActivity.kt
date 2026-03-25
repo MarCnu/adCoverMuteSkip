@@ -73,6 +73,10 @@ class MainActivity : ComponentActivity() {
             }
         })
 
+        binding.switchDisableAutoClick.isChecked = DataStorage.loadDisableAutoClick(this)
+        binding.switchDisableAutoClick.setOnCheckedChangeListener { _, isChecked ->
+            DataStorage.saveDisableAutoClick(this, isChecked)
+        }
         binding.switchMonitorVolumeUp.isChecked = DataStorage.loadMonitorVolumeClick(this)
         binding.switchMonitorVolumeUp.setOnCheckedChangeListener { _, isChecked ->
             DataStorage.saveMonitorVolumeClick(this, isChecked)

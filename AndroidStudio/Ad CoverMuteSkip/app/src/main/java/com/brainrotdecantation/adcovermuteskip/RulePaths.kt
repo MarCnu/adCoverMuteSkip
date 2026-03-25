@@ -16,7 +16,7 @@ class RulePaths {
         val SKIP_BUTTON = RulePathNodeTools.convert("$PACKAGE_NAME:id/skip_ad_button") // The skip ad button, main video
 
         val EXPANDED_AD_PORTRAIT_BUTTON = RulePathNodeTools.convert(arrayOf("$PACKAGE_NAME:id/engagement_panel_wrapper", "$PACKAGE_NAME:id/header_container", 0, 0, 1)) // The giant ad below/on the side, it can sometimes appear when you pause the video without an ad video being triggered
-        val EXPANDED_AD_PORTRAIT_BUTTON_PAUSE = RulePathNodeTools.convert(arrayOf("$PACKAGE_NAME:id/engagement_panel_wrapper", "$PACKAGE_NAME:id/header_container", 0, 1, 1)) // There is an extra item
+        val EXPANDED_AD_PORTRAIT_BUTTON_PAUSE = RulePathNodeTools.convert(arrayOf("$PACKAGE_NAME:id/engagement_panel_wrapper", "$PACKAGE_NAME:id/header_container", 0, 1, 3)) // There are 4 buttons: Like/Share/Other options/Close
         val EXPANDED_AD_LANDSCAPE_BUTTON_PAUSE = RulePathNodeTools.convert(arrayOf("$PACKAGE_NAME:id/fullscreen_engagement_panel_holder", "$PACKAGE_NAME:id/header_container", 0, 0, 1)) // Landscape left side ad
 
         val MINIMISED_AD = RulePathNodeTools.convert("$PACKAGE_NAME:id/main_companion_container") // The small ad below the video and above the title
