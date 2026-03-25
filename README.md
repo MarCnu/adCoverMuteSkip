@@ -28,7 +28,7 @@ The goal of this project is to provide a system that decreases the toxicity of a
 
 Download the latest APK from the **release-apk** folder (or recompile it yourself).
 
-### [Ad CoverMuteSkip v1.1.3.0.apk](https://github.com/echoesofcreation/adCoverMuteSkip/blob/d7b0d84a709583ac0ec5a96c970f9cfd84dbf0ba/release-apk/adcovermuteskip%201.1.2.2.apk)
+### [Ad CoverMuteSkip v1.1.3.0.apk](https://github.com/MarCnu/adCoverMuteSkip/blob/main/release-apk/adcovermuteskip%201.1.3.0.apk)
 
 The app uses the Accessibility Service feature from Android to receive screen change events and generate virtual clicks. You'll need to enable/disable the service manually, once activated it'll run all the time independantly of the graphical app.
 
